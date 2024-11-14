@@ -53,7 +53,7 @@ class studentController extends Controller
         $student->photo = $photo;
         $student -> save();
 
-        return redirect()->route('student.index');
+        return redirect()->route('student.index')->with('success', 'Data Kelas berhasil ditambahkan');
     }
 
 
@@ -97,7 +97,7 @@ class studentController extends Controller
             $student->photo = $photo;
             $student-> save();
 
-            return redirect()->route('student.index');
+            return redirect()->route('student.index')->with('success', 'Data Kelas berhasil diperbarui');
     }
 
     /**
@@ -108,6 +108,6 @@ class studentController extends Controller
         $student= student::find($id);
         $student->delete();
 
-        return redirect()->route('student.index');
+        return redirect()->route('student.index')->with('success', 'Data Kelas berhasil dihapus');
     }
 }

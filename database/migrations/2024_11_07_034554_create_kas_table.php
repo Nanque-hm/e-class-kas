@@ -10,8 +10,8 @@ return new class extends Migration
     {
         Schema::create('kas', function (Blueprint $table) {
             $table->id();
-            $table->string('nama');
-            $table->decimal('nominal', 12, 2);
+            $table->foreignId('student_id')->constrained('students');
+            $table->decimal('nominal', 10, 2);
             $table->date('date');
             $table->timestamps();
         });

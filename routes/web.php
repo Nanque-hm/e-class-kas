@@ -4,6 +4,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RombelController;
 use App\Http\Controllers\studentController;
 use App\Http\Controllers\KasController;
+use App\Http\Controllers\LaporankasController;
 use App\Http\Controllers\StudentExportController;
 use Illuminate\Support\Facades\Route;
 
@@ -17,6 +18,7 @@ Route::get('/dashboard', function () {
 
 Route::get('/kas-laporan', [KasController::class, 'laporan'])->name('kas.laporan');
 
+
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -26,6 +28,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('rombel', RombelController::class);
     Route::resource('student', studentController::class);
     Route::resource('kas', KasController::class);
+    Route::get('/laporan', [LaporankasController::class, 'index'])->name('laporan.index');
+    Route::post('/laporan', [LaporankasController::class, 'generate'])->name('laporan.generate');
+
 });
 
 require __DIR__.'/auth.php';

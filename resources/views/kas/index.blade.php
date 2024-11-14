@@ -5,7 +5,8 @@
                 <h2 class="font-semibold text-2xl text-gray-800 leading-tight flex items-center gap-2">
                     {{ __('Daftar Kas') }}
                 </h2>
-                <span class="text-sm text-gray-500">Total Transaksi: {{ $kas->count() }}</span>
+                <span class="text-sm text-gray-500">Total Transaksi: {{ $kas->count() }} </span>
+                <span class="text-sm text-gray-500">Saldo saat ini: Rp {{ number_format($totalSaldo, 0, ',', '.') }} </span>
             </div>
         </div>
     </x-slot>
@@ -51,8 +52,11 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
                                             {{ $loop->iteration }}
                                         </td>
-                                        <td class="px-6 py-4 whitespace-nowrap">
-                                            <div class="text-sm font-medium text-gray-900">{{ $item->nama }}</div>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium
+                                                {{$item->student->name }}">
+                                                {{$item->student->name ?? "Belum ada kelas"}}
+                                            </span>
                                         </td>
                                         <td class="px-6 py-4 whitespace-nowrap">
                                             <div class="text-sm text-gray-900">Rp {{ number_format($item->nominal, 0, ',', '.') }}</div>
@@ -118,4 +122,5 @@
             return false;
         }
     </script>
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </x-app-layout>

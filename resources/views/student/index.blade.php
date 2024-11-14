@@ -9,9 +9,17 @@
                 <span class="text-sm text-gray-500">Total Siswa: {{ $students->count() }}</span>
             </div>
         </div>
+
     </x-slot>
+
+    
     <div class="p-4 sm:ml-64">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+            @if(session('success'))
+            <div class="mb-4 bg-green-100 border-l-4 border-green-500 text-green-700 p-4 rounded shadow-sm">
+                {{ session('success') }}
+            </div>
+        @endif
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6">
                     <div class="flex justify-between items-center mb-6">
@@ -22,12 +30,12 @@
                             </svg>
                             Tambah Siswa
                         </a>
-                        {{-- <a href="{{route('students.export')}}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150 ease-in-out">
+                       <a href="{{route('students.export')}}" class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-md transition duration-150 ease-in-out">
                             <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
                             </svg>
                             Export
-                        </a> --}}
+                        </a>
                     </div>
 
                     <div class="overflow-x-auto">
@@ -83,13 +91,13 @@
                                     <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                         <div class="flex space-x-2">
                                             <a href="{{route('student.edit', $student->id)}}" 
-                                               class="text-indigo-600 hover:text-indigo-900">
-                                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                               class="text-indigo-600 hover:text-indigo-900  w-14 h-9.5 bg-blue-900 hover:scale-105 hover:bg-blue-700 rounded-lg justify-center content-center pl-4">
+                                                <svg class="w-5 h-5 text-white " fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
                                                           d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/>
                                                 </svg>
                                             </a>
-                                            <form method="post" action="{{ route('student.destroy', $student->id) }}" 
+                                            {{-- <form method="post" action="{{ route('student.destroy', $student->id) }}" 
                                                   class="inline-block">
                                                 @csrf
                                                 @method('DELETE')
@@ -101,6 +109,16 @@
                                                               d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
                                                     </svg>
                                                 </button>
+                                            </form> --}}
+                                            <form method="post" action="{{ route('student.destroy', $student->id) }}" class="inline" onsubmit="return confirmDelete(event)">
+                                                @csrf
+                                                @method('DELETE')
+                                                <x-danger-button class="flex items-center gap-1 transform hover:scale-105 transition-transform duration-200">
+                                                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                                              d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                                    </svg>
+                                                </x-danger-button>
                                             </form>
                                         </div>
                                     </td>
@@ -113,4 +131,26 @@
             </div>
         </div>
     </div>
+    <script>
+        function confirmDelete(event) {
+            event.preventDefault();
+            Swal.fire({
+                title: 'Konfirmasi Hapus',
+                text: "Apakah Anda yakin ingin menghapus kelas ini?",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#ef4444',
+                cancelButtonColor: '#6b7280',
+                confirmButtonText: 'Ya, Hapus',
+                cancelButtonText: 'Batal'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    event.target.submit();
+                }
+            });
+            return false;
+        }
+    </script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </x-app-layout>

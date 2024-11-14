@@ -36,7 +36,7 @@ class RombelController extends Controller
         $rombels-> name = $request->name;
         $rombels -> save();
 
-        return redirect()->route('rombel.index');
+        return redirect()->route('rombel.index')->with('success', 'Data Kelas berhasil ditambahkan');
     }
 
 
@@ -69,7 +69,7 @@ class RombelController extends Controller
             $rombels-> name = $request->name;
             $rombels -> save();
     
-            return redirect()->route('rombel.index'); 
+            return redirect()->route('rombel.index')->with('success', 'Data Kelas berhasil diperbarui'); 
     }
 
     /**
@@ -80,6 +80,7 @@ class RombelController extends Controller
         $rombel= Rombel::find($id);
         $rombel->delete();
 
-        return redirect()->route('rombel.index');
+        return redirect()->route('rombel.index')->with('success', 'Data Kelas berhasil dihapus');
     }
+    
 }
